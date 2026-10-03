@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School AI Assistant - Ask Anything & Learn</title>
+  <style>
+    /* ============================================================
+       style.css - School AI Assistant
+       Simple, clean, kid-friendly CSS (No frameworks, pure standard CSS)
+       ============================================================ */
+
+    /* 1. Page Layout & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #f4f7fb;
+      color: #2d3748;
+      line-height: 1.6;
+      padding: 20px 12px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* 2. Header */
+    header.app-header {
+      background-color: #ffffff;
+      padding: 24px 28px;
+      border-radius: 18px;
+      border: 2px solid #e2e8f0;
+      text-align: center;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-badge {
+      display: inline-block;
+      background-color: #ebf8ff;
+      color: #2b6cb0;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    header.app-header h1 {
+      font-size: 28px;
+      color: #1a365d;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    header.app-header p {
+      font-size: 16px;
+      color: #4a5568;
+    }
+
+    /* API Key Warning / Configuration Banner for Students */
+    .api-key-banner {
+      background-color: #fffaf0;
+      border: 1px solid #feebc8;
+      border-left: 5px solid #dd6b20;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 14px;
+      color: #7b341e;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .api-key-banner .key-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-grow: 1;
+      min-width: 260px;
+    }
+
+    .api-key-banner input {
+      padding: 8px 12px;
+      border: 1px solid #cbd5e0;
+      border-radius: 8px;
+      font-size: 13px;
+      width: 100%;
+      background: #ffffff;
+    }
+
+    .api-key-banner button {
+      background-color: #dd6b20;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .api-key-banner button:hover {
+      background-color: #c05621;
+    }
+
+    /* 3. Main Chat Container */
+    .chat-card {
+      background-color: #ffffff;
+      border-radius: 18px;
+      border: 2px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 480px;
+    }
+
+    /* Chat Header Bar (Clear chat, status) */
+    .chat-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background-color: #f7fafc;
+      border-bottom: 2px solid #edf2f7;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #38a169;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #38a169;
+    }
+
+    .clear-btn {
+      background-color: #edf2f7;
+      color: #4a5568;
+      border: 1px solid #cbd5e0;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .clear-btn:hover {
+      background-color: #fed7d7;
+      color: #c53030;
+      border-color: #feb2b2;
+    }
+
+    /* Example questions bar */
+    .examples-section {
+      padding: 14px 20px;
+      background-color: #fafbfc;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .examples-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #718096;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .examples-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .example-btn {
+      background-color: #edf2f7;
+      border: 1px solid #e2e8f0;
+      color: #2b6cb0;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease-in-out;
+    }
+
+    .example-btn:hover {
+      background-color: #ebf8ff;
+      border-color: #bee3f8;
+      color: #2c5282;
+      transform: translateY(-1px);
+    }
+
+    /* Messages Scroll Area */
+    .chat-messages {
+      flex: 1;
+      padding: 24px 20px;
+      overflow-y: auto;
+      max-height: 480px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background-color: #ffffff;
+      scroll-behavior: smooth;
+    }
+
+    /* 4. Chat Messages and Bubbles */
+    .message-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      max-width: 85%;
+    }
+
+    .message-row.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .message-row.assistant {
+      align-self: flex-start;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      background-color: #edf2f7;
+      border: 1px solid #cbd5e0;
+    }
+
+    .assistant .avatar {
+      background-color: #ebf8ff;
+      border-color: #bee3f8;
+    }
+
+    .user .avatar {
+      background-color: #e2e8f0;
+      border-color: #cbd5e0;
+    }
+
+    .bubble-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sender-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #718096;
+      padding: 0 4px;
+    }
+
+    .user .sender-name {
+      text-align: right;
+    }
+
+    .bubble {
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-size: 15px;
+      line-height: 1.6;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    .assistant .bubble {
+      background-color: #f7fafc;
+      color: #1a202c;
+      border: 1px solid #e2e8f0;
+      border-top-left-radius: 4px;
+    }
+
+    .user .bubble {
+      background-color: #3182ce;
+      color: #ffffff;
+      border-top-right-radius: 4px;
+    }
+
+    .bubble pre {
+      background: #edf2f7;
+      padding: 10px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 8px 0;
+      font-size: 13px;
+    }
+
+    .bubble code {
+      font-family: monospace;
+      background: rgba(0,0,0,0.06);
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+
+    /* Thinking / Typing indicator */
+    .thinking-bubble {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 14px 18px;
+      background-color: #f7fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      border-top-left-radius: 4px;
+      font-size: 14px;
+      color: #4a5568;
+    }
+
+    .dot-pulse {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #3182ce;
+      animation: pulse 1.2s infinite ease-in-out;
+    }
+    .dot-pulse:nth-child(2) { animation-delay: 0.2s; }
+    .dot-pulse:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes pulse {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1.1); opacity: 1; }
+    }
+
+    /* System alert / Error message bubble */
+    .system-error {
+      background-color: #fff5f5;
+      color: #c53030;
+      border: 1px solid #feb2b2;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 14px;
+      align-self: center;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    /* 5. Input Section */
+    .input-section {
+      padding: 16px 20px;
+      background-color: #ffffff;
+      border-top: 2px solid #edf2f7;
+    }
+
+    .input-form {
+      display: flex;
+      gap: 12px;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 14px 18px;
+      font-size: 15px;
+      border: 2px solid #cbd5e0;
+      border-radius: 12px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background-color: #ffffff;
+      color: #2d3748;
+    }
+
+    .chat-input:focus {
+      border-color: #3182ce;
+      box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+    }
+
+    .chat-input::placeholder {
+      color: #a0aec0;
+    }
+
+    .send-btn {
+      background-color: #3182ce;
+      color: #ffffff;
+      border: none;
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .send-btn:hover {
+      background-color: #2b6cb0;
+    }
+
+    .send-btn:disabled {
+      background-color: #a0aec0;
+      cursor: not-allowed;
+    }
+
+    /* 6. Learning Tips Section ("How to Ask Better Questions") */
+    .tips-card {
+      background-color: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 22px 26px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .tips-card h2 {
+      font-size: 18px;
+      color: #1a365d;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .tips-col {
+      background: #f7fafc;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid #edf2f7;
+    }
+
+    .tips-col h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 8px;
+    }
+
+    .tips-col ul {
+      padding-left: 20px;
+      font-size: 13.5px;
+      color: #4a5568;
+    }
+
+    .tips-col li {
+      margin-bottom: 6px;
+    }
+
+    .quick-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .quick-tag {
+      background: #edf2f7;
+      color: #2b6cb0;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid #cbd5e0;
+    }
+
+    .quick-tag:hover {
+      background: #ebf8ff;
+      border-color: #90cdf4;
+    }
+
+    /* 7. Instructions Modal / Guide Container for Students (Hindi & English) */
+    .student-guide {
+      background: #ffffff;
+      border: 2px solid #bee3f8;
+      border-radius: 18px;
+      padding: 24px;
+      font-size: 14.5px;
+      color: #2d3748;
+    }
+
+    .guide-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .guide-header h2 {
+      font-size: 18px;
+      color: #2b6cb0;
+    }
+
+    .guide-toggle {
+      background: none;
+      border: 1px solid #cbd5e0;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      color: #4a5568;
+    }
+
+    .guide-step {
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+
+    .guide-step:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .guide-step h4 {
+      font-size: 15px;
+      color: #1a365d;
+      margin-bottom: 4px;
+    }
+
+    .code-badge {
+      background: #edf2f7;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 13px;
+      color: #c53030;
+    }
+
+    /* 8. Responsive Design */
+    @media (max-width: 640px) {
+      body {
+        padding: 10px 8px;
+      }
+
+      header.app-header {
+        padding: 16px 14px;
+      }
+
+      header.app-header h1 {
+        font-size: 22px;
+      }
+
+      .message-row {
+        max-width: 95%;
+      }
+
+      .tips-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .send-btn {
+        padding: 12px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- 1. Header Section -->
+    <header class="app-header">
+      <span class="header-badge">Friendly Student AI Tutor</span>
+      <h1>
+        <span>🎓</span> School AI Assistant
+      </h1>
+      <p>Ask anything and learn with AI — Homework, Math, Science & English/Hindi Support</p>
+    </header>
+
+    <!-- 2. Easy API Key Setup Bar (Allows running immediately without editing code) -->
+    <div class="api-key-banner" id="apiKeyBanner">
+      <div>
+        <strong>🔑 Groq API Key:</strong>
+        <span id="keyStatusText" style="margin-left: 4px;">Enter key below or keep in <code>script.js</code></span>
+      </div>
+      <div class="key-input-wrap">
+        <input 
+          type="password" 
+          id="customApiKeyInput" 
+          placeholder="Paste Groq API Key (gsk_...)" 
+          aria-label="Groq API Key"
+        />
+        <button id="saveKeyBtn" type="button">Save Key</button>
+      </div>
+    </div>
+
+    <!-- 3. Main Chat Card -->
+    <main class="chat-card" role="region" aria-label="AI Chatbot Area">
+      
+      <!-- Top Bar: Online status & Clear chat -->
+      <div class="chat-top-bar">
+        <div class="status-indicator">
+          <span class="status-dot"></span>
+          <span id="modelBadge">Teacher AI Active (Groq Llama 3)</span>
+        </div>
+        <button id="clearChatBtn" class="clear-btn" type="button" aria-label="Clear Chat Conversation">
+          🧹 Clear Chat
+        </button>
+      </div>
+
+      <!-- Example Questions Section -->
+      <div class="examples-section">
+        <span class="examples-label">💡 Click an example question to try:</span>
+        <div class="examples-list" id="examplesContainer">
+          <button class="example-btn" type="button">Explain photosynthesis in simple Hindi.</button>
+          <button class="example-btn" type="button">What is a computer?</button>
+          <button class="example-btn" type="button">Solve 25 × 12.</button>
+          <button class="example-btn" type="button">Explain HTML to me.</button>
+          <button class="example-btn" type="button">What is gravity?</button>
+          <button class="example-btn" type="button">Write 5 sentences about India.</button>
+        </div>
+      </div>
+
+      <!-- Scrollable Message Conversation Area -->
+      <div class="chat-messages" id="chatMessages" role="log" aria-live="polite">
+        <!-- Initial Welcome Message from AI Teacher -->
+        <div class="message-row assistant">
+          <div class="avatar" aria-hidden="true">👩‍🏫</div>
+          <div class="bubble-wrapper">
+            <span class="sender-name">School AI Teacher</span>
+            <div class="bubble">
+Namaste! Hello students! 👋 
+I am your friendly AI Teacher. 
+
+You can ask me questions about:
+• 📚 Homework & Concepts
+• 🔬 Science & Nature
+• 🔢 Mathematics step-by-step
+• 💻 Computer Studies & Coding
+• 🇮🇳 Hindi and English learning
+
+Click on any example question above or type your question below!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Input Section -->
+      <section class="input-section">
+        <form class="input-form" id="chatForm">
+          <input 
+            type="text" 
+            id="userInput" 
+            class="chat-input" 
+            placeholder="Type your homework or study question here..." 
+            autocomplete="off"
+            aria-label="Student Question Input"
+          />
+          <button type="submit" id="sendBtn" class="send-btn" aria-label="Ask AI Button">
+            <span>Ask AI</span> 
+            <span aria-hidden="true">🚀</span>
+          </button>
+        </form>
+      </section>
+
+    </main>
+
+    <!-- 4. How to Ask Better Questions Section -->
+    <section class="tips-card">
+      <h2>💡 How to Ask Better Questions</h2>
+      <div class="tips-grid">
+        <div class="tips-col">
+          <h3>3 Golden Rules for Students:</h3>
+          <ul>
+            <li><strong>1. Ask one question at a time:</strong> AI answers best when focused on one specific topic.</li>
+            <li><strong>2. Mention your Class/Level:</strong> Example: <em>"Explain this like I am in Class 6."</em></li>
+            <li><strong>3. Ask for real-life examples:</strong> Examples make hard topics very easy to grasp!</li>
+          </ul>
+        </div>
+        <div class="tips-col">
+          <h3>Try Adding These Phrases:</h3>
+          <p style="font-size: 13px; color: #4a5568; margin-bottom: 8px;">Click to paste into input:</p>
+          <div class="quick-tags">
+            <button class="quick-tag" type="button">Explain this in Hindi</button>
+            <button class="quick-tag" type="button">Explain like I am in Class 6</button>
+            <button class="quick-tag" type="button">Give me a real life example</button>
+            <button class="quick-tag" type="button">Explain step by step</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Student Instructions & Project Guide (Folder, Files, Setup & Security) -->
+    <article class="student-guide">
+      <div class="guide-header">
+        <h2>📖 Student Setup Guide (प्रोजेक्ट कैसे चलाएं)</h2>
+        <button class="guide-toggle" id="toggleGuideBtn" type="button">Hide / Show Guide</button>
+      </div>
+
+      <div id="guideContent">
+        <div class="guide-step">
+          <h4>1. Folder कैसे बनाएं (Create Folder)</h4>
+          <p>अपने कंप्यूटर (Desktop या Documents) पर एक नया Folder बनाएं, जैसे कि: <span class="code-badge">school-ai-chatbot</span></p>
+        </div>
+
+        <div class="guide-step">
+          <h4>2. तीनों Files कैसे बनाएं (Create 3 Files)</h4>
+          <p>Notepad या VS Code खोलें और उस फोल्डर में 3 अलग-अलग files बनाएं:</p>
+          <ul>
+            <li><span class="code-badge">index.html</span> - वेबसाइट का स्ट्रक्चर</li>
+            <li><span class="code-badge">style.css</span> - डिज़ाइन और कलर्स</li>
+            <li><span class="code-badge">script.js</span> - Groq API और चैट फंक्शनैलिटी</li>
+          </ul>
+        </div>
+
+        <div class="guide-step">
+          <h4>3. Groq API Key कहाँ डालें (Where to put API Key)</h4>
+          <p>Groq Console (<a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer">console.groq.com</a>) से फ्री API Key बनाएं। आप इसे ऊपर दिए गए <strong>"Groq API Key"</strong> बॉक्स में सीधे पेस्ट करके <strong>Save Key</strong> कर सकते हैं, या <span class="code-badge">script.js</span> की पहली लाइन में <code>const GROQ_API_KEY = "gsk_...";</code> में लिख सकते हैं।</p>
+        </div>
+
+        <div class="guide-step">
+          <h4>4. Website कैसे चलाएं (How to Run)</h4>
+          <p><span class="code-badge">index.html</span> फाइल पर डबल क्लिक करें! यह सीधे Chrome, Edge, या Firefox ब्राउज़र में खुल जाएगी। किसी सर्वर या इंस्टॉलेशन की ज़रूरत नहीं है।</p>
+        </div>
+
+        <div class="guide-step">
+          <h4>5. GitHub Pages पर Free Host कैसे करें (How to Host)</h4>
+          <ol style="padding-left: 20px; font-size: 13.5px; color: #4a5568;">
+            <li>GitHub.com पर नया public repository बनाएं (e.g. <code>my-school-ai</code>).</li>
+            <li>ये तीनों files (<code>index.html</code>, <code>style.css</code>, <code>script.js</code>) upload करें।</li>
+            <li>Repository के <strong>Settings → Pages</strong> में जाएं।</li>
+            <li>Branch में <strong>main / root</strong> चुनकर Save करें। 2 मिनट में आपकी लाइव वेबसाइट लिंक तैयार हो जाएगी!</li>
+          </ol>
+        </div>
+
+        <div class="guide-step" style="background: #fffaf0; padding: 12px; border-radius: 8px; border: 1px solid #feebc8;">
+          <h4 style="color: #c05621;">⚠️ Frontend में API Key रखने की Security Limitation</h4>
+          <p style="font-size: 13.5px; color: #7b341e;">
+            <strong>ध्यान दें (Important Warning):</strong> जब हम ब्राउज़र में JavaScript (Frontend) में API Key रखते हैं, तो कोई भी छात्र या यूजर ब्राउज़र में "Inspect Element" या "View Source" दबाकर उस Key को देख सकता है। यह प्रोजेक्ट सिर्फ सीखने और स्कूल प्रोजेक्ट्स/डेमो के लिए है। असली पब्लिक प्रोडक्शन ऐप्स में हमेशा एक Backend Server (जैसे Python या Node.js) का उपयोग करके API Key को छुपाया जाता है।
+          </p>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- ============================================================
+       script.js - School AI Assistant
+       Clean, readable, modular Vanilla JavaScript for Students
+       ============================================================ -->
+  <script>
+    /* ============================================================
+       1. CONFIGURATION SECTION
+       ============================================================ */
+
+    // IMPORTANT SECURITY NOTE:
+    // This frontend-only version is for learning/demo purposes.
+    // Never expose a production API key in frontend JavaScript.
+    // For a production website, use a backend server to protect the API key.
+    
+    // Default API Key variable (can also be saved via localStorage in browser)
+    let GROQ_API_KEY = localStorage.getItem("student_groq_key") || "YOUR_GROQ_API_KEY";
+
+    // Groq chat model (kept in a single variable so students can change it anytime)
+    // Common student-friendly Groq models: "llama-3.3-70b-versatile" or "llama-3.1-8b-instant"
+    const MODEL = "llama-3.3-70b-versatile";
+
+    // Groq Chat Completions Endpoint URL
+    const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+    // Friendly School Teacher System Prompt
+    const SYSTEM_PROMPT = `You are a friendly AI teacher for school students. Explain concepts in very simple language. Prefer Hindi when the student asks in Hindi and English when the student asks in English. Use simple examples, short explanations, and step-by-step reasoning when appropriate. Do not use unnecessarily complicated technical terms. Encourage students to understand the concept instead of simply copying the answer. Use warm, encouraging language with helpful emojis.`;
+
+    /* ============================================================
+       2. DOM ELEMENTS
+       ============================================================ */
+    const chatMessages = document.getElementById("chatMessages");
+    const chatForm = document.getElementById("chatForm");
+    const userInput = document.getElementById("userInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const clearChatBtn = document.getElementById("clearChatBtn");
+    const exampleBtns = document.querySelectorAll(".example-btn");
+    const quickTags = document.querySelectorAll(".quick-tag");
+    const customApiKeyInput = document.getElementById("customApiKeyInput");
+    const saveKeyBtn = document.getElementById("saveKeyBtn");
+    const keyStatusText = document.getElementById("keyStatusText");
+    const toggleGuideBtn = document.getElementById("toggleGuideBtn");
+    const guideContent = document.getElementById("guideContent");
+
+    /* ============================================================
+       3. CHAT STATE & CONVERSATION HISTORY
+       ============================================================ */
+    // Keeps previous messages so the AI understands conversation context
+    let conversationHistory = [
+      {
+        role: "system",
+        content: SYSTEM_PROMPT
+      }
+    ];
+
+    // Check saved API key on startup
+    if (GROQ_API_KEY && GROQ_API_KEY !== "YOUR_GROQ_API_KEY") {
+      customApiKeyInput.value = GROQ_API_KEY;
+      keyStatusText.innerHTML = "✅ <span style='color: #2b6cb0;'>Key is set and ready!</span>";
+    }
+
+    /* ============================================================
+       4. DISPLAY MESSAGE HELPER
+       ============================================================ */
+    function appendMessage(sender, text) {
+      const row = document.createElement("div");
+      row.className = `message-row ${sender}`;
+
+      const avatar = document.createElement("div");
+      avatar.className = "avatar";
+      avatar.setAttribute("aria-hidden", "true");
+      avatar.textContent = sender === "user" ? "🧑‍🎓" : "👩‍🏫";
+
+      const bubbleWrapper = document.createElement("div");
+      bubbleWrapper.className = "bubble-wrapper";
+
+      const senderName = document.createElement("span");
+      senderName.className = "sender-name";
+      senderName.textContent = sender === "user" ? "You (Student)" : "School AI Teacher";
+
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      bubble.textContent = text;
+
+      bubbleWrapper.appendChild(senderName);
+      bubbleWrapper.appendChild(bubble);
+
+      row.appendChild(avatar);
+      row.appendChild(bubbleWrapper);
+
+      chatMessages.appendChild(row);
+      scrollToBottom();
+      return row;
+    }
+
+    /* Helper: Show Thinking / Loading Indicator */
+    function showThinkingIndicator() {
+      const thinkingRow = document.createElement("div");
+      thinkingRow.className = "message-row assistant";
+      thinkingRow.id = "thinkingIndicator";
+
+      const avatar = document.createElement("div");
+      avatar.className = "avatar";
+      avatar.setAttribute("aria-hidden", "true");
+      avatar.textContent = "👩‍🏫";
+
+      const bubbleWrapper = document.createElement("div");
+      bubbleWrapper.className = "bubble-wrapper";
+
+      const senderName = document.createElement("span");
+      senderName.className = "sender-name";
+      senderName.textContent = "School AI Teacher";
+
+      const bubble = document.createElement("div");
+      bubble.className = "thinking-bubble";
+      bubble.innerHTML = `
+        <span>Thinking</span>
+        <span class="dot-pulse"></span>
+        <span class="dot-pulse"></span>
+        <span class="dot-pulse"></span>
+      `;
+
+      bubbleWrapper.appendChild(senderName);
+      bubbleWrapper.appendChild(bubble);
+
+      thinkingRow.appendChild(avatar);
+      thinkingRow.appendChild(bubbleWrapper);
+
+      chatMessages.appendChild(thinkingRow);
+      scrollToBottom();
+    }
+
+    /* Helper: Remove Thinking Indicator */
+    function removeThinkingIndicator() {
+      const indicator = document.getElementById("thinkingIndicator");
+      if (indicator) {
+        indicator.remove();
+      }
+    }
+
+    /* Helper: Show friendly student error bubble */
+    function showSystemError(message) {
+      const errorDiv = document.createElement("div");
+      errorDiv.className = "system-error";
+      errorDiv.textContent = `ℹ️ ${message}`;
+      chatMessages.appendChild(errorDiv);
+      scrollToBottom();
+    }
+
+    /* Auto-scroll to bottom of conversation */
+    function scrollToBottom() {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    /* ============================================================
+       5. GROQ API REQUEST FUNCTION
+       ============================================================ */
+    async function fetchGroqAIResponse(messages) {
+      // 1. Check if the student entered an API key
+      if (!GROQ_API_KEY || GROQ_API_KEY === "YOUR_GROQ_API_KEY") {
+        throw new Error("MISSING_KEY");
+      }
+
+      // 2. Prepare payload for Chat Completions API
+      const requestBody = {
+        model: MODEL,
+        messages: messages,
+        temperature: 0.6,
+        max_tokens: 1024
+      };
+
+      // 3. Make fetch request
+      const response = await fetch(GROQ_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${GROQ_API_KEY}`
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      // 4. Handle HTTP errors gracefully
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error("INVALID_KEY");
+        } else if (response.status === 429) {
+          throw new Error("RATE_LIMIT");
+        } else {
+          throw new Error("SERVER_ERROR");
+        }
+      }
+
+      // 5. Parse JSON response
+      const data = await response.json();
+      if (data && data.choices && data.choices.length > 0) {
+        return data.choices[0].message.content;
+      } else {
+        throw new Error("EMPTY_RESPONSE");
+      }
+    }
+
+    /* ============================================================
+       6. SEND MESSAGE HANDLER
+       ============================================================ */
+    async function handleSendMessage(event) {
+      if (event) event.preventDefault();
+
+      const userQuestion = userInput.value.trim();
+
+      // Check empty question
+      if (!userQuestion) {
+        showSystemError("Please enter a question.");
+        userInput.focus();
+        return;
+      }
+
+      // Check API Key existence before sending
+      if (!GROQ_API_KEY || GROQ_API_KEY === "YOUR_GROQ_API_KEY") {
+        showSystemError("Please enter and save your Groq API key in the top box first.");
+        customApiKeyInput.focus();
+        return;
+      }
+
+      // 1. Show student's message immediately
+      appendMessage("user", userQuestion);
+      userInput.value = "";
+
+      // 2. Add question to conversation history
+      conversationHistory.push({
+        role: "user",
+        content: userQuestion
+      });
+
+      // 3. Disable send button & show thinking
+      sendBtn.disabled = true;
+      userInput.disabled = true;
+      showThinkingIndicator();
+
+      try {
+        // 4. Fetch response from Groq
+        const aiAnswer = await fetchGroqAIResponse(conversationHistory);
+
+        // 5. Remove thinking indicator and display AI response
+        removeThinkingIndicator();
+        appendMessage("assistant", aiAnswer);
+
+        // 6. Append to conversation history so context is remembered
+        conversationHistory.push({
+          role: "assistant",
+          content: aiAnswer
+        });
+
+      } catch (error) {
+        removeThinkingIndicator();
+
+        // 7. Student-friendly error handling (No scary technical stack traces)
+        if (error.message === "MISSING_KEY") {
+          showSystemError("Please check your API key. Enter it in the box above.");
+        } else if (error.message === "INVALID_KEY") {
+          showSystemError("Please check your API key. It looks incorrect or expired.");
+        } else if (error.message === "RATE_LIMIT") {
+          showSystemError("AI is receiving too many questions right now. Please wait 10 seconds and try again.");
+        } else {
+          showSystemError("AI is currently unavailable. Please check your internet connection and try again.");
+        }
+        console.warn("School Assistant Info:", error.message);
+      } finally {
+        // 8. Re-enable button and focus input
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
+      }
+    }
+
+    /* ============================================================
+       7. EVENT LISTENERS (CLEAR CHAT, EXAMPLES, KEYS)
+       ============================================================ */
+
+    // Form submit listener (also handles Enter key automatically)
+    chatForm.addEventListener("submit", handleSendMessage);
+
+    // Clear Chat Button
+    clearChatBtn.addEventListener("click", () => {
+      // Reset history to just the system prompt
+      conversationHistory = [
+        {
+          role: "system",
+          content: SYSTEM_PROMPT
+        }
+      ];
+
+      // Reset messages area with the initial greeting
+      chatMessages.innerHTML = `
+        <div class="message-row assistant">
+          <div class="avatar" aria-hidden="true">👩‍🏫</div>
+          <div class="bubble-wrapper">
+            <span class="sender-name">School AI Teacher</span>
+            <div class="bubble">
+Chat cleared! ✨ 
+Ask me another question whenever you are ready.
+            </div>
+          </div>
+        </div>
+      `;
+      userInput.focus();
+    });
+
+    // Example Questions Click Handler
+    exampleBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        userInput.value = btn.textContent;
+        userInput.focus();
+      });
+    });
+
+    // Quick tag suggestions click handler
+    quickTags.forEach(tag => {
+      tag.addEventListener("click", () => {
+        const currentVal = userInput.value.trim();
+        if (currentVal) {
+          userInput.value = `${currentVal} (${tag.textContent})`;
+        } else {
+          userInput.value = tag.textContent;
+        }
+        userInput.focus();
+      });
+    });
+
+    // Save custom API key button
+    saveKeyBtn.addEventListener("click", () => {
+      const inputVal = customApiKeyInput.value.trim();
+      if (inputVal) {
+        GROQ_API_KEY = inputVal;
+        localStorage.setItem("student_groq_key", inputVal);
+        keyStatusText.innerHTML = "✅ <span style='color: #2b6cb0;'>Key saved in browser!</span>";
+        showSystemError("API Key saved! Now you can ask your question.");
+      } else {
+        showSystemError("Please paste a valid Groq API key.");
+      }
+    });
+
+    // Toggle Guide section
+    toggleGuideBtn.addEventListener("click", () => {
+      if (guideContent.style.display === "none") {
+        guideContent.style.display = "block";
+        toggleGuideBtn.textContent = "Hide Guide";
+      } else {
+        guideContent.style.display = "none";
+        toggleGuideBtn.textContent = "Show Guide";
+      }
+    });
+  </script>
+</body>
+</html>
